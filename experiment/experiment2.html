@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechStore — Premium Tech Products</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <style>
+    body { scroll-behavior: smooth; }
+    .hero {
+      background: linear-gradient(135deg, #0d6efd, #6610f2);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      transition: 0.3s ease;
+    }
+    .footer-link:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">🖥️ TechStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero text-white text-center py-5">
+  <div class="container">
+    <h1 class="display-4 fw-bold">WELCOME Tech Life</h1>
+    <p class="lead">Latest gadgets. Best prices. Trusted quality.</p>
+    <a href="#products" class="btn btn-light btn-lg mt-3">Shop Now</a>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-3">Featured Products</h2>
+    <p class="text-center text-muted mb-5">Hand-picked premium tech items</p>
+
+    <div class="row g-4">
+
+      <!-- PRODUCT CARD -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow">
+          <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400" class="card-img-top" />
+          <div class="card-body d-flex flex-column">
+            <h5>ProBook Laptop</h5>
+            <p class="text-muted">Powerful performance with sleek design.</p>
+            <h5 class="text-primary">$1299</h5>
+            <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#productModal">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow">
+          <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400" class="card-img-top" />
+          <div class="card-body d-flex flex-column">
+            <h5>SoundMax Headset</h5>
+            <p class="text-muted">Crystal-clear audio for gaming & music.</p>
+            <h5 class="text-primary">$89</h5>
+            <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#productModal">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" class="card-img-top" />
+          <div class="card-body d-flex flex-column">
+            <h5>ChronoX Watch</h5>
+            <p class="text-muted">Smart lifestyle companion.</p>
+            <h5 class="text-primary">$349</h5>
+            <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#productModal">Details</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold">Why Choose Us?</h2>
+    <p class="text-muted">We deliver quality tech with trusted service.</p>
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <h5>⚡ Fast Delivery</h5>
+        <p>Quick and reliable shipping.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>🔒 Secure Payment</h5>
+        <p>100% safe transactions.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>💬 Support</h5>
+        <p>24/7 customer support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4">Contact Us</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form>
+          <input class="form-control mb-3" placeholder="Your Name" />
+          <input class="form-control mb-3" placeholder="Email" />
+          <textarea class="form-control mb-3" rows="4" placeholder="Message"></textarea>
+          <button class="btn btn-primary w-100">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white py-4">
+  <div class="container text-center">
+    <h5>🖥️ TechStore</h5>
+    <p class="text-muted">© 2026 All rights reserved</p>
+    <div>
+      <a href="#" class="text-white me-3 footer-link">Twitter</a>
+      <a href="#" class="text-white me-3 footer-link">Instagram</a>
+      <a href="#" class="text-white footer-link">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Product Details</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">More product info coming soon...</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

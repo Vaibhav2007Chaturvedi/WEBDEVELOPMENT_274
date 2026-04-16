@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Result Calculator Pro</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center min-h-screen">
+
+<div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+  <h1 class="text-3xl font-bold text-center mb-6 text-indigo-600">🎓 Result Calculator</h1>
+
+  <!-- Input -->
+  <label class="block mb-2 font-semibold text-gray-700">Number of Subjects:</label>
+  <input id="subjectCount" type="number" class="w-full p-3 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Enter number">
+
+  <button onclick="calculateResult()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+    Calculate Result
+  </button>
+
+  <!-- Loader -->
+  <div id="loading" class="text-center mt-4 hidden">Calculating...</div>
+
+  <!-- Output -->
+  <div id="result" class="mt-6 text-center"></div>
+</div>
+
+<script>
+function calculateResult() {
+  let count = document.getElementById("subjectCount").value;
+
+  if (count <= 0 || count === "") {
+    alert("Please enter a valid number of subjects");
+    return;
+  }
+
+  document.getElementById("loading").classList.remove("hidden");
+
+  let total = 0;
+  let failed = false;
+
+  for (let i = 1; i <= count; i++) {
+    let marks = prompt("Enter marks for subject " + i);
+
+    if (marks === null || marks === "" || isNaN(marks)) {
+      alert("Invalid input! Please enter numeric marks.");
+      document.getElementById("loading").classList.add("hidden");
+      return;
+    }
+
+    marks = Number(marks);
+
+    if (marks < 0 || marks > 100) {
+      alert("Marks should be between 0 and 100");
+      document.getElementById("loading").classList.add("hidden");
+      return;
+    }
+
+    if (marks < 40) {
+      failed = true;
+    }
+
+    total += marks;
+  }
+
+  let average = total / count;
+  let grade = "";
+  let resultStatus = "";
+
+  // Grade Calculation
+  if (average >= 85) {
+    grade = "A+";
+  } else if (average >= 75) {
+    grade = "A";
+  } else if (average >= 60) {
+    grade = "B";
+  } else if (average >= 50) {
+    grade = "C";
+  } else {
+    grade = "F";
+  }
+
+  // Pass/Fail Logic
+  if (average >= 40 && !failed) {
+    resultStatus = "Pass";
+  } else {
+    resultStatus = "Fail";
+  }
+
+  document.getElementById("loading").classList.add("hidden");
+
+  document.getElementById("result").innerHTML = `
+    <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+      <p class="text-lg font-semibold">Total Marks: <span class="text-indigo-600">${total}</span></p>
+      <p class="text-lg">Average Marks: <span class="text-indigo-600">${average.toFixed(2)}</span></p>
+      <p class="text-lg">Grade: <span class="text-indigo-600 font-bold">${grade}</span></p>
+      <p class="mt-2 text-xl font-bold ${resultStatus === 'Pass' ? 'text-green-600' : 'text-red-600'}">
+        ${resultStatus === 'Pass' ? '✅ Pass' : '❌ Fail'}
+      </p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>

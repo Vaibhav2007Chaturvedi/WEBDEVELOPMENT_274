@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employee Salary Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #dbeafe, #e0e7ff);
+  margin: 0;
+}
+.container {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+h2 {
+  text-align: center;
+  color: #4f46e5;
+}
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+.add { background: #16a34a; }
+.show { background: #2563eb; }
+.total { background: #9333ea; }
+.avg { background: #f59e0b; }
+button:hover { opacity: 0.9; }
+#output {
+  margin-top: 15px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #4f46e5;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h2>Employee Salary System</h2>
+
+<input type="text" id="name" placeholder="Employee Name"><br>
+<input type="text" id="empId" placeholder="Employee ID"><br>
+<input type="number" id="salary" placeholder="Salary"><br>
+<input type="text" id="dept" placeholder="Department"><br>
+
+<button class="add" onclick="addEmployee()">Add</button>
+<button class="show" onclick="showEmployees()">Show</button>
+<button class="total" onclick="totalSalary()">Total</button>
+<button class="avg" onclick="averageSalary()">Average</button>
+
+<div id="output"></div>
+</div>
+
+<script>
+let employees = [];
+
+function addEmployee() {
+  let name = document.getElementById("name").value;
+  let id = document.getElementById("empId").value;
+  let salary = document.getElementById("salary").value;
+  let dept = document.getElementById("dept").value;
+
+  if(name=="" || id=="" || salary=="" || dept==""){
+    alert("Fill all fields");
+    return;
+  }
+
+  employees.push({name, id, salary: Number(salary), dept});
+  alert("Employee Added");
+
+  document.getElementById("name").value="";
+  document.getElementById("empId").value="";
+  document.getElementById("salary").value="";
+  document.getElementById("dept").value="";
+}
+
+function showEmployees(){
+  if(employees.length==0){
+    document.getElementById("output").innerHTML = "No Data";
+    return;
+  }
+
+  let table = "<table><tr><th>Name</th><th>ID</th><th>Salary</th><th>Dept</th></tr>";
+  employees.forEach(e => {
+    table += `<tr>
+      <td>${e.name}</td>
+      <td>${e.id}</td>
+      <td>${e.salary}</td>
+      <td>${e.dept}</td>
+    </tr>`;
+  });
+  table += "</table>";
+
+  document.getElementById("output").innerHTML = table;
+}
+
+function totalSalary(){
+  let total = 0;
+  employees.forEach(e => total += e.salary);
+  document.getElementById("output").innerHTML = "<b>Total Salary:</b> " + total;
+}
+
+function averageSalary(){
+  if(employees.length==0){
+    document.getElementById("output").innerHTML = "No Data";
+    return;
+  }
+
+  let total = 0;
+  employees.forEach(e => total += e.salary);
+  let avg = total / employees.length;
+
+  document.getElementById("output").innerHTML = "<b>Average Salary:</b> " + avg.toFixed(2);
+}
+</script>
+
+</body>
+</html>
