@@ -1,0 +1,14 @@
+h1{
+    color:violet;
+    background-color:yellow;
+}
+body{
+    background-color:pink;
+}
+button{
+    background-color: rgb(174, 255, 0);
+    color:white;
+    button.hover{
+        color:blue;
+    }
+}

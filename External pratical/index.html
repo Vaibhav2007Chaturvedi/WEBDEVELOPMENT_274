@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #e8e8e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 420px;
+            border: 1px solid #ccc;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Heading */
+        h2 {
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        /* Divider line */
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 15px 0;
+        }
+
+        /* Labels */
+        label {
+            font-size: 14px;
+            color: #444;
+            display: block;
+            margin-bottom: 4px;
+            margin-top: 10px;
+        }
+
+        /* All inputs */
+        input {
+            width: 100%;
+            padding: 9px 10px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 14px;
+            background: #fafafa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            background: white;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Secondary button (Calculate) */
+        #calcBtn {
+            background: #28a745;
+            margin-top: 15px;
+        }
+
+        #calcBtn:hover {
+            background: #1e7e34;
+        }
+
+        /* Subject inputs area */
+        #subjectInputs {
+            margin-top: 10px;
+        }
+
+        /* Error message */
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        /* Result box */
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            display: none;  /* hidden until result is shown */
+        }
+
+        #result h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Each result row */
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            color: #444;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-row span:last-child {
+            font-weight: bold;
+            color: #222;
+        }
+
+        /* PASS / FAIL colors */
+        .pass {
+            color: green;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .fail {
+            color: red;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Student Marks Calculator</h2>
+    <p class="subtitle">BCA / B.Tech First Year Project</p>
+    <hr>
+
+    <!-- Step 1: Enter number of subjects -->
+    <label for="numSubjects">Number of Subjects:</label>
+    <input type="number" id="numSubjects" placeholder="e.g. 5" min="1">
+
+    <button onclick="createSubjectInputs()">Create Subject Fields</button>
+
+    <!-- Error message for step 1 -->
+    <p class="error" id="error1"></p>
+
+    <!-- Step 2: Subject marks inputs appear here -->
+    <div id="subjectInputs"></div>
+
+    <!-- Error message for step 2 -->
+    <p class="error" id="error2"></p>
+
+    <!-- Calculate button (hidden at start) -->
+    <button id="calcBtn" onclick="calculateResult()" style="display:none;">
+        Calculate Result
+    </button>
+
+    <!-- Result box -->
+    <div id="result">
+        <h3>Result Summary</h3>
+        <div class="result-row">
+            <span>Total Marks</span>
+            <span id="totalMarks"></span>
+        </div>
+        <div class="result-row">
+            <span>Maximum Marks</span>
+            <span id="maxMarks"></span>
+        </div>
+        <div class="result-row">
+            <span>Average Marks</span>
+            <span id="avgMarks"></span>
+        </div>
+        <div class="result-row">
+            <span>Percentage</span>
+            <span id="percentage"></span>
+        </div>
+        <div class="result-row">
+            <span>Grade</span>
+            <span id="grade"></span>
+        </div>
+        <!-- PASS or FAIL shown separately with color -->
+        <p id="passFailMsg"></p>
+    </div>
+
+</div>
+
+<script>
+
+    // This function creates input boxes for each subject
+    function createSubjectInputs() {
+
+        // Get number of subjects entered by user
+        let numSubjects = document.getElementById("numSubjects").value;
+        let error1 = document.getElementById("error1");
+        let subjectInputs = document.getElementById("subjectInputs");
+
+        // Clear old content
+        subjectInputs.innerHTML = "";
+        error1.textContent = "";
+        document.getElementById("result").style.display = "none";
+        document.getElementById("calcBtn").style.display = "none";
+
+        // Validation: check if field is empty
+        if (numSubjects === "") {
+            error1.textContent = "Please enter the number of subjects.";
+            return;
+        }
+
+        // Validation: must be a positive number
+        numSubjects = parseInt(numSubjects);
+        if (numSubjects <= 0 || isNaN(numSubjects)) {
+            error1.textContent = "Number of subjects must be greater than 0.";
+            return;
+        }
+
+        // Validation: not too many subjects
+        if (numSubjects > 15) {
+            error1.textContent = "Please enter 15 or fewer subjects.";
+            return;
+        }
+
+        // Create input fields for each subject
+        for (let i = 1; i <= numSubjects; i++) {
+            subjectInputs.innerHTML += `
+                <label for="mark${i}">Subject ${i} Marks (out of 100):</label>
+                <input type="number" id="mark${i}" 
+                       placeholder="Enter marks for Subject ${i}" 
+                       min="0" max="100">
+            `;
+        }
+
+        // Show the calculate button after inputs are created
+        document.getElementById("calcBtn").style.display = "block";
+    }
+
+
+    // This function calculates total, average, grade, and pass/fail
+    function calculateResult() {
+
+        let numSubjects = parseInt(document.getElementById("numSubjects").value);
+        let error2 = document.getElementById("error2");
+        error2.textContent = "";
+
+        let totalMarks = 0;
+        let failed = false;  // becomes true if any subject has marks < 33
+
+        // Loop through each subject input and validate
+        for (let i = 1; i <= numSubjects; i++) {
+
+            let marksInput = document.getElementById("mark" + i).value;
+
+            // Check if field is empty
+            if (marksInput === "") {
+                error2.textContent = "Please fill in marks for all subjects.";
+                return;
+            }
+
+            let marks = Number(marksInput);
+
+            // Check marks are between 0 and 100
+            if (marks < 0 || marks > 100) {
+                error2.textContent = "Marks must be between 0 and 100 for each subject.";
+                return;
+            }
+
+            // Add to total
+            totalMarks += marks;
+
+            // If any subject is less than 33, student fails
+            if (marks < 33) {
+                failed = true;
+            }
+        }
+
+        // Calculate average and percentage
+        let maxPossible = numSubjects * 100;
+        let average = totalMarks / numSubjects;
+        let percentage = (totalMarks / maxPossible) * 100;
+
+        // Find grade based on percentage
+        let grade = "";
+        if (percentage >= 90) {
+            grade = "A+";
+        } else if (percentage >= 80) {
+            grade = "A";
+        } else if (percentage >= 70) {
+            grade = "B";
+        } else if (percentage >= 60) {
+            grade = "C";
+        } else if (percentage >= 50) {
+            grade = "D";
+        } else {
+            grade = "F";
+        }
+
+        // Show result box
+        document.getElementById("result").style.display = "block";
+
+        // Fill in result values
+        document.getElementById("totalMarks").textContent = totalMarks;
+        document.getElementById("maxMarks").textContent = maxPossible;
+        document.getElementById("avgMarks").textContent = average.toFixed(2);
+        document.getElementById("percentage").textContent = percentage.toFixed(2) + "%";
+        document.getElementById("grade").textContent = grade;
+
+        // Show PASS or FAIL with color
+        let passFailMsg = document.getElementById("passFailMsg");
+        if (failed) {
+            passFailMsg.textContent = "Result: FAIL";
+            passFailMsg.className = "fail";
+        } else {
+            passFailMsg.textContent = "Result: PASS";
+            passFailMsg.className = "pass";
+        }
+    }
+
+</script>
+
+</body>
+</html>
